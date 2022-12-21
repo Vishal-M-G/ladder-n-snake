@@ -1,13 +1,128 @@
-body {
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#root {
+  width: 100%;
+  height: auto;
+  display: flex;
+}
+
+#boardContainer {
+  width: 70%;
+  height: 100vh;
+  padding: 2vh;
+}
+
+#diceContainer {
+  width: 30%;
+  height: 100vh;
+}
+
+#board {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+
+.rows {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.box {
+  width: 9.5%;
+  height: 95%;
+  background-color: white;
+}
+
+#dice {
+  top: 100px;
+  left: 100px;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  transform-style: preserve-3d;
+  perspective: 1000000px;
+  transition: transform 1s;
+  transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg);
+}
+
+.face {
+  border: 2px solid white;
+  background-color: blue;
+  border-radius: 2vh;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#fsix {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  transform: rotateY(90deg) translateX(100px) translateZ(-100px);
+}
+
+#ffive {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.two_in_row {
+  width: 100%;
+  padding: 0 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#ffour {
+  padding: 5% 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transform: rotateX(90deg) translateY(-100px) translateZ(-100px);
+}
+
+#fthree {
+  transform: rotateX(90deg) translateY(-100px) translateZ(100px);
+}
+
+#ftwo {
+  transform: translateZ(-200px);
+}
+
+#fone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotateY(90deg) translateX(100px) translateZ(100px);
+}
+
+.dot {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
 }
