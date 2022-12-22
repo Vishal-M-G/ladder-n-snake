@@ -48,21 +48,29 @@ code {
 }
 
 .box {
+  position: relative;
   width: 9.5%;
   height: 95%;
   background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.box h3 {
+  position: absolute;
+  top: 0;
+  right: 0.5vh;
 }
 
 #dice {
-  top: 100px;
-  left: 100px;
   position: relative;
   width: 200px;
   height: 200px;
   transform-style: preserve-3d;
   perspective: 1000000px;
-  transition: transform 1s;
-  transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg);
+  /* transform: rotateX(10deg) rotateY(10deg) rotateZ(10deg); */
 }
 
 .face {
@@ -78,7 +86,7 @@ code {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  transform: rotateY(90deg) translateX(100px) translateZ(-100px);
+  transform: rotateY(90deg) translateZ(-100px);
 }
 
 #ffive {
@@ -86,6 +94,7 @@ code {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  transform: translateZ(100px);
 }
 
 .two_in_row {
@@ -101,22 +110,33 @@ code {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  transform: rotateX(90deg) translateY(-100px) translateZ(-100px);
+  transform: rotateX(90deg) translateZ(-100px);
 }
 
 #fthree {
-  transform: rotateX(90deg) translateY(-100px) translateZ(100px);
+  display: flex;
+  transform: rotateX(90deg) translateZ(100px);
+}
+
+.three_in_row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  rotate: 45deg;
 }
 
 #ftwo {
-  transform: translateZ(-200px);
+  display: flex;
+  align-items: center;
+  transform: translateZ(-100px);
 }
 
 #fone {
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: rotateY(90deg) translateX(100px) translateZ(100px);
+  transform: rotateY(90deg) translateZ(100px);
 }
 
 .dot {
@@ -125,4 +145,62 @@ code {
   height: 40px;
   border-radius: 50%;
   background-color: white;
+}
+
+.btnContainer {
+  width: 20vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  right: 10vh;
+  bottom: 10vh;
+  position: absolute;
+  display: flex;
+}
+
+.btnContainer button {
+  width: 100%;
+}
+
+#diceCont {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
+}
+
+#player1 {
+  color: red;
+  animation: travel 2s;
+}
+
+#player2 {
+  color: yellow;
+  animation: travel 2s;
+}
+
+#player3 {
+  color: blue;
+  animation: travel 2s;
+}
+
+#player4 {
+  color: green;
+  animation: travel 2s;
+}
+
+@keyframes travel {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.btnSelect {
+  width: 100%;
+  text-align: center;
 }
