@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ladder-n-snake/static/css/main.17f6cec0.css",
+    "main.js": "/ladder-n-snake/static/js/main.aff1485d.js",
+    "index.html": "/ladder-n-snake/index.html",
+    "main.17f6cec0.css.map": "/ladder-n-snake/static/css/main.17f6cec0.css.map",
+    "main.aff1485d.js.map": "/ladder-n-snake/static/js/main.aff1485d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.17f6cec0.css",
+    "static/js/main.aff1485d.js"
+  ]
+}
