@@ -292,13 +292,13 @@ code {
   transform: rotateZ(45deg);
 }
 
-@media screen and ((max-width: 1350px)) {
+@media screen and ((max-width: 1080px)) {
   #root {
     display: none;
   }
 }
 
-@media screen and ((max-height: 750px)) {
+@media screen and ((max-height: 600px)) {
   #root {
     display: none;
   }
