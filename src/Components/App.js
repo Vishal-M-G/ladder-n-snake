@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import EjectIcon from "@mui/icons-material/Eject";
-import LightBoard from "./LightBoard";
 
 const App = () => {
   let [noP, setNoP] = useState(0);
   let [dieVal, setDieVal] = useState(5);
   let [turn, setTurn] = useState(0);
+  let [open, inVopen] = useState(true);
   let [ar, setAr] = useState([
     [0, false],
     [0, false],
     [0, false],
     [0, false],
   ]);
+
+  let [res, setRes] = useState([-1, -1, -1]);
 
   useEffect(() => {
     if (turn != 100 && ar[turn][1] === true) setTurn((turn + 1) % noP);
@@ -20,32 +22,82 @@ const App = () => {
       for (let k of ar) {
         if (k[1] === true) fc++;
       }
-      if (noP > 0 && fc === noP - 1) {
+      if (fc === noP - 1) {
         alert("Game Over");
         document.location.reload();
       }
     }, 1);
   });
 
-  useEffect(() => {
-    if (noP === 0) document.getElementById("random").disabled = true;
-    else {
-      document.getElementById("random").disabled = false;
-    }
-  }, [noP]);
+  const LightBoard = () => {
+    return (
+      <div id="lgb">
+        <div className="lHeading">
+          <p>
+            🐍 Welcome to VmG's <span>Ladder & Snake</span> 🐍
+          </p>
+        </div>
+        <div className="lBody">
+          <div>
+            <h3 style={{ textAlign: "center" }}>
+              <i>Its Recomended to play in full scrern mode</i>
+            </h3>
+            <h1 style={{ display: "inline" }}>Select number of players</h1>
+            &nbsp;&nbsp;
+            <select
+              style={{ height: "5vh", width: "4vw" }}
+              value={noP}
+              onChange={(self) => {
+                setNoP(parseInt(self.target.value));
+              }}
+            >
+              <option value="0">0</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+          <button
+            id="start"
+            onClick={() => {
+              if (noP > 1) inVopen(false);
+              else alert("Common bro ! number of players cannot be zero 😆 ");
+            }}
+          >
+            Start
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
-      <LightBoard />
-      <img src="cobra.png" alt="snake" className="snakes" id="sf38_20" />
-      <img src="cobra.png" alt="snake" className="snakes" id="sf99_77" />
-      <img src="cobra.png" alt="snake" className="snakes" id="sf66_26" />
-      <img src="ladder.png" alt="ladder" className="imgLadder" id="f6_t52" />
-      <img src="ladder.png" alt="ladder" className="imgLadder" id="f24_t62" />
-      <img src="ladder.png" alt="ladder" className="imgLadder" id="f55_t71" />
+      {open && <LightBoard />}
       <div id="boardContainer">
         <div id="board">
           <div className="rows">
+            <img src="cobra.png" alt="snake" className="snakes" id="sf38_20" />
+            <img src="cobra.png" alt="snake" className="snakes" id="sf99_77" />
+            <img src="cobra.png" alt="snake" className="snakes" id="sf66_26" />
+            <img
+              src="ladder.png"
+              alt="ladder"
+              className="imgLadder"
+              id="f6_t52"
+            />
+            <img
+              src="ladder.png"
+              alt="ladder"
+              className="imgLadder"
+              id="f24_t62"
+            />
+            <img
+              src="ladder.png"
+              alt="ladder"
+              className="imgLadder"
+              id="f55_t71"
+            />
             <div className="box" id="u100">
               {noP > 0 && ar[0][0] >= 100 && (
                 <EjectIcon className="players" id="player1" />
@@ -1568,6 +1620,72 @@ const App = () => {
         </div>
       </div>
       <div id="diceContainer">
+        <button
+          id="random"
+          onClick={(tar) => {
+            tar.target.disabled = true;
+            let obj = {
+              1: { x: 0, y: -90, z: 0 },
+              2: { x: 0, y: 180, z: 0 },
+              3: { x: -90, y: 0, z: 0 },
+              4: { x: 90, y: 0, z: 0 },
+              5: { x: 0, y: 0, z: 0 },
+              6: { x: 0, y: 90, z: 0 },
+            };
+            let ele = document.getElementById("dice");
+            let k = (parseInt(Math.random() * 1000) % 6) + 1;
+            setDieVal(k);
+            let rand = [
+              360, 720, 1080, 1440, 1800, 2160, 2520, 2880, 3240, 3600,
+            ];
+            ele.style.transform = `rotateX(${
+              obj[k].x + rand[parseInt(Math.random() * 1000) % 10]
+            }deg) rotateY(${
+              obj[k].y + rand[parseInt(Math.random() * 1000) % 10]
+            }deg) rotateZ(${
+              obj[k].z + rand[parseInt(Math.random() * 1000) % 10]
+            }deg)`;
+            ele.style.transition = "transform 3s";
+            setTimeout(() => {
+              ar[turn][0] += k;
+              if (ar[turn][0] >= 100 && ar[turn][1] === false) {
+                for (let i = 0; i < noP - 1; i++) {
+                  if (res[i] === -1) {
+                    res[i] = turn;
+                    break;
+                  }
+                }
+                ar[turn][1] = true;
+              }
+              if (
+                ar[turn][0] === 6 ||
+                ar[turn][0] === 24 ||
+                ar[turn][0] === 55 ||
+                ar[turn][0] === 99 ||
+                ar[turn][0] === 38 ||
+                ar[turn][0] === 66
+              ) {
+                let t = turn;
+                setTurn(100);
+                setTimeout(() => {
+                  if (ar[t][0] === 6) ar[t][0] = 52;
+                  else if (ar[t][0] === 24) ar[t][0] = 62;
+                  else if (ar[t][0] === 55) ar[t][0] = 71;
+                  else if (ar[t][0] === 99) ar[t][0] = 77;
+                  else if (ar[t][0] === 38) ar[t][0] = 20;
+                  else if (ar[t][0] === 66) ar[t][0] = 26;
+                  setTurn((t + 1) % noP);
+                  tar.target.disabled = false;
+                }, 2000);
+              } else {
+                tar.target.disabled = false;
+                setTurn((turn + 1) % noP);
+              }
+            }, 3100);
+          }}
+        >
+          Roll the dice
+        </button>
         <div id="diceCont">
           <div id="dice">
             <div className="face" id="fone">
@@ -1623,101 +1741,72 @@ const App = () => {
             </div>
           </div>
         </div>
-        <div className="btnSelect">
-          <select
-            value={noP}
-            onChange={(self) => {
-              setNoP(parseInt(self.target.value));
-            }}
-          >
-            <option value="0">0</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select>
-          <input
-            type="text"
-            value={noP}
-            onChange={(self) => setDieVal(self.target.value)}
-          />
-
+        <div>
           {noP > 0 && (
-            <h1>
-              Current Turn : Player {<EjectIcon id={`player${turn + 1}`} />}
+            <h1 style={{ display: "flex", justifyContent: "center" }}>
+              Current Turn : Player{" "}
+              {
+                <EjectIcon
+                  style={{
+                    fontSize: "50px",
+                    border: "1px solid white",
+                    marginLeft: "0.5vh",
+                  }}
+                  id={`player${turn + 1}`}
+                />
+              }
             </h1>
           )}
         </div>
-        <div className="btnContainer">
-          <input
-            type="text"
-            value={dieVal}
-            onChange={(self) => setDieVal(self.target.value)}
-          />
-          <button
-            id="random"
-            onClick={(tar) => {
-              tar.target.disabled = true;
-              let obj = {
-                1: { x: 0, y: -90, z: 0 },
-                2: { x: 0, y: 180, z: 0 },
-                3: { x: -90, y: 0, z: 0 },
-                4: { x: 90, y: 0, z: 0 },
-                5: { x: 0, y: 0, z: 0 },
-                6: { x: 0, y: 90, z: 0 },
-              };
-              let ele = document.getElementById("dice");
-              // let k = 6;
-              let k = (parseInt(Math.random() * 1000) % 6) + 1;
-              setDieVal(k);
-              let rand = [
-                360, 720, 1080, 1440, 1800, 2160, 2520, 2880, 3240, 3600,
-              ];
-              ele.style.transform = `rotateX(${
-                obj[k].x + rand[parseInt(Math.random() * 1000) % 10]
-              }deg) rotateY(${
-                obj[k].y + rand[parseInt(Math.random() * 1000) % 10]
-              }deg) rotateZ(${
-                obj[k].z + rand[parseInt(Math.random() * 1000) % 10]
-              }deg)`;
-              ele.style.transition = "transform 2s";
-              setTimeout(() => {
-                ar[turn][0] += k;
-                if (ar[turn][0] >= 100 && ar[turn][1] === false) {
-                  ar[turn][1] = true;
-                }
-                if (
-                  ar[turn][0] === 6 ||
-                  ar[turn][0] === 24 ||
-                  ar[turn][0] === 55 ||
-                  ar[turn][0] === 99 ||
-                  ar[turn][0] === 38 ||
-                  ar[turn][0] === 66
-                ) {
-                  let t = turn;
-                  setTurn(100);
-                  setTimeout(() => {
-                    if (ar[t][0] === 6) ar[t][0] = 52;
-                    else if (ar[t][0] === 24) ar[t][0] = 62;
-                    else if (ar[t][0] === 55) ar[t][0] = 71;
-                    else if (ar[t][0] === 99) ar[t][0] = 77;
-                    else if (ar[t][0] === 38) ar[t][0] = 20;
-                    else if (ar[t][0] === 66) ar[t][0] = 26;
-                    setTurn((t + 1) % noP);
-                    tar.target.disabled = false;
-                  }, 2000);
-                } else {
-                  tar.target.disabled = false;
-                  setTurn((turn + 1) % noP);
-                }
-              }, 2100);
-            }}
-          >
-            Random
-          </button>
+        <div className="price">
+          {noP > 1 && (
+            <div>
+              <div>
+                <img src="gold.png" alt="" />
+              </div>
+              <div>
+                {res[0] != -1 && (
+                  <EjectIcon
+                    id={`player${res[0] + 1}`}
+                    style={{ width: "100px", height: "100px" }}
+                  />
+                )}
+              </div>
+            </div>
+          )}
+          {noP > 2 && (
+            <div>
+              <div>
+                <img src="silver.png" alt="" />
+              </div>
+              <div>
+                {res[1] != -1 && (
+                  <EjectIcon
+                    id={`player${res[1] + 1}`}
+                    style={{ width: "100px", height: "100px" }}
+                  />
+                )}
+              </div>
+            </div>
+          )}
+          {noP > 3 && (
+            <div>
+              <div>
+                <img src="bron.png" alt="" />
+              </div>
+              <div>
+                {res[2] != -1 && (
+                  <EjectIcon
+                    id={`player${res[2] + 1}`}
+                    style={{ width: "100px", height: "100px" }}
+                  />
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
   );
 };
-
 export default App;

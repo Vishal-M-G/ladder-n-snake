@@ -18,9 +18,11 @@ code {
 
 #root {
   width: 100%;
-  height: auto;
+  height: 100vh;
   display: flex;
   position: relative;
+  background-color: pink;
+  overflow: hidden;
 }
 
 #boardContainer {
@@ -32,6 +34,22 @@ code {
 #diceContainer {
   width: 30%;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#diceContainer button {
+  border: none;
+  margin-top: 2vh;
+  width: 50%;
+}
+
+#diceContainer button:hover {
+  background-color: greenyellow;
+  transform: scale(1.1);
+  transition: transform 1s;
 }
 
 #board {
@@ -165,11 +183,10 @@ code {
 
 #diceCont {
   width: 100%;
-  height: 50%;
+  height: 35%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: aqua;
 }
 
 .players {
@@ -180,13 +197,13 @@ code {
 
 @keyframes shadowshow {
   0% {
-    box-shadow: 0 0 5px rgba(30, 132, 242, 0.92);
+    box-shadow: 0 0 5px rgba(2, 10, 18, 0.92);
   }
   50% {
     box-shadow: 0 0 6px rgba(202, 228, 225, 0.98);
   }
   100% {
-    box-shadow: 0 0 5px rgba(30, 132, 242, 0.92);
+    box-shadow: 0 0 5px rgba(1, 7, 12, 0.92);
   }
 }
 
@@ -213,11 +230,6 @@ code {
   to {
     opacity: 1;
   }
-}
-
-.btnSelect {
-  width: 100%;
-  text-align: center;
 }
 
 .imgLadder {
@@ -280,14 +292,93 @@ code {
   transform: rotateZ(45deg);
 }
 
-@media screen and ((max-width: 1300px)) {
+@media screen and ((max-width: 1350px)) {
   #root {
     display: none;
   }
 }
 
-@media screen and ((max-height: 500px)) {
+@media screen and ((max-height: 750px)) {
   #root {
     display: none;
   }
+}
+
+.rows:nth-of-type(2n + 1) .box:nth-of-type(2n + 1) {
+  background-color: greenyellow;
+}
+
+.rows:nth-of-type(2n) .box:nth-of-type(2n) {
+  background-color: yellowgreen;
+}
+
+#lgb {
+  z-index: 3;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  background-color: rgb(0, 0, 0, 0.9);
+  position: absolute;
+  flex-direction: column;
+  text-shadow: 0 0 7px red;
+}
+
+.lHeading {
+  height: 20%;
+  width: 100%;
+  color: white;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.lBody {
+  height: 80%;
+  width: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#start {
+  height: 10vh;
+  width: 20%;
+  font-size: 45px;
+}
+
+#start:hover {
+  text-shadow: 0 0 7px red;
+  color: white;
+  background-color: greenyellow;
+  transition: color 1s, background-color 1s, text-shadow 1s;
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 95%;
+  height: 60%;
+}
+
+.price div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  height: 30%;
+}
+
+.price div div {
+  width: 45%;
+  height: 100%;
+}
+
+.price div div img {
+  width: 100%;
+  height: 100%;
 }
